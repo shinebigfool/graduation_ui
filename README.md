@@ -1,32 +1,24 @@
 # 毕设前端代码
-套用vue-admin-template框架
+套用vue-admin-template框架，前后端分离
 
 幼儿园共建共享绘本图书馆管理平台的设计与实现
-
-
-http://localhost:9529/
-
 
 ## Build Setup
 
 
 ```bash
-# clone the project
-git clone https://github.com/PanJiaChen/vue-admin-template.git
+# run server
+https://github.com/shinebigfool/graduation.git
+server port on localhost:2048
 
-# enter the project directory
-cd vue-admin-template
-
+# run front
 # install dependency
 npm install
 
 # develop
 npm run dev
+
+application will start on http://localhost:9529/
 ```
 
 
-## License
-
-[MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
-
-Copyright (c) 2017-present PanJiaChen
