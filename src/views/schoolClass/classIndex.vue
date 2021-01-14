@@ -40,6 +40,7 @@
       border
       fit
       highlight-current-row
+      @row-click="classUser"
     >
       <el-table-column
         label="年级"
@@ -77,7 +78,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="80">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" round @click="modifyClass(scope.row)">详细信息</el-button><br>
+          <el-button type="primary" size="small" round @click.native.stop="modifyClass(scope.row)">详细信息</el-button>
+          <el-button type="primary" size="small" round @click.native.stop="delClass(scope.row)">删除班级</el-button>
         </template>
       </el-table-column>
 
@@ -94,7 +96,7 @@
   </div>
 </template>
 <script>
-import { qryClass, modClass } from '@/api/schoolClass'
+import { qryClass, modClass, delClass } from '@/api/schoolClass'
 export default {
   data() {
     return {
@@ -163,6 +165,30 @@ export default {
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
+    },
+    classUser(data) {
+      this.$router.push({
+        path: '/edu/userInClass',
+        query: {
+          cid: data.id
+        }
+      })
+    },
+    delClass(data) {
+      this.$confirm('确定删除该班级？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delClass({ 'id': data.id }).then(response => {
+          this.$message.success('删除成功')
+        }).catch(fail => {
+          this.$message.error(fail.retMsg)
+        })
+        this.fetchData()
+      }).catch(() => {
+        this.$message.info('已取消')
+      })
     }
   }
 }

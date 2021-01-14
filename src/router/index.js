@@ -40,12 +40,12 @@ export const constantRoutes = [
     path: '/',
     name: 'Home',
     component: () => import('@/views/library/Home'),
-    redirect: '/index',
+    redirect: '/page',
     children: [
       {
-        path: '/index',
-        name: 'AppIndex',
-        component: () => import('@/views/library/AppIndex')
+        path: '/page',
+        component: () => import('@/views/library/Billboard'),
+        hidden: true
       },
       {
         path: '/library',
@@ -58,9 +58,20 @@ export const constantRoutes = [
         hidden: true
       },
       {
-        path: '/jotter',
-        component: () => import('@/views/jotter/index'),
-        hidden: true
+        path: '/index',
+        name: 'AppIndex',
+        component: () => import('@/views/library/AppIndex')
+      }
+    ]
+  },
+  {
+    path: '/toHome',
+    redirect: '/',
+    component: Layout,
+    children: [
+      {
+        path: '/',
+        meta: { title: '返回图书平台', icon: 'link' }
       }
     ]
   },
@@ -77,27 +88,6 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: '图书管理',
-    meta: { title: '图书管理', icon: 'library' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '图书详情', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-  {
     path: '/favorite',
     component: Layout,
     children: [
@@ -110,29 +100,18 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/toHome',
-    redirect: '/',
-    component: Layout,
-    children: [
-      {
-        path: '/',
-        meta: { title: '返回图书平台', icon: 'link' }
-      }
-    ]
-  },
-  {
-    path: '/personnalLog',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'personnalLog',
-        component: () => import('@/views/personnalBorrow/index'),
-        meta: { title: '个人借书记录', icon: 'card' }
-      }
-    ]
-  },
+  // {
+  //   path: '/personnalLog',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'personnalLog',
+  //       component: () => import('@/views/personnalBorrow/index'),
+  //       meta: { title: '个人借书记录', icon: 'card' }
+  //     }
+  //   ]
+  // },
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -145,27 +124,31 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-
   {
-    path: '/borrowLog',
+    path: '/example',
     component: Layout,
-    meta: {
-      title: '借书日志管理',
-      icon: 'borrowLog',
-      meta: { roles: ['admin'] }
-    },
+    redirect: '/example/table',
+    name: '图书管理',
     children: [
       {
-        path: 'logDetail',
-        component: () => import('@/views/borrowlog/index'),
-        meta: { title: '借书日志', icon: 'log', roles: ['admin'] }
-      },
-      {
-        path: 'adminvoid',
-        meta: { title: '借书日志管理——无权限', icon: 'nested' }
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/table/index'),
+        meta: { title: '图书详情', icon: 'library ', roles: ['admin', 'contentManager', 'parent', 'teacher'] }
       }
     ]
   },
+  // {
+  //   path: '/borrowLog',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'logDetail',
+  //       component: () => import('@/views/borrowlog/index'),
+  //       meta: { title: '借书日志管理', icon: 'log', roles: ['admin', 'contentManager'] }
+  //     }
+  //   ]
+  // },
   {
     path: '/edu',
     component: Layout,
@@ -188,13 +171,13 @@ export const asyncRoutes = [
       {
         path: 'userInClass',
         name: '班级详情',
-        meta: { title: '班级详情', icon: 'userInClass', roles: ['admin', 'teacher'] },
+        meta: { title: '班级详情', icon: 'userInClass', roles: ['admin', 'teacher', 'student', 'parent'] },
         component: () => import('@/views/schoolClass/classInfo')
       },
       {
         path: 'readingReport',
         name: '阅读情况统计',
-        meta: { title: '阅读情况统计', icon: 'report', roles: ['admin', 'teacher', 'student'] },
+        meta: { title: '阅读情况统计', icon: 'report', roles: ['admin', 'teacher', 'student', 'parent', 'contentManager'] },
         component: () => import('@/views/schoolClass/readingReport')
       }
     ]
@@ -210,7 +193,7 @@ export const asyncRoutes = [
         path: 'user',
         name: '用户注册',
         component: () => import('@/views/registCenter/userRegist'),
-        meta: { title: '用户注册', icon: 'user', roles: ['admin', 'teacher'] }
+        meta: { title: '用户注册', icon: 'user', roles: ['admin', 'contentManager'] }
       },
       {
         path: 'book',
@@ -222,7 +205,32 @@ export const asyncRoutes = [
         path: 'class',
         name: '班级注册',
         component: () => import('@/views/registCenter/classRegist'),
-        meta: { title: '班级注册', icon: 'class', roles: ['admin', 'teacher', 'parent', 'contentManager'] }
+        meta: { title: '班级注册', icon: 'classManage1', roles: ['admin'] }
+      }
+    ]
+  },
+  {
+    path: '/log',
+    component: Layout,
+    meta: {
+      title: '日志管理',
+      icon: 'logManager'
+    },
+    children: [
+      {
+        path: 'personnalLog',
+        component: () => import('@/views/personnalBorrow/index'),
+        meta: { title: '个人借书日志', icon: 'card' }
+      },
+      {
+        path: 'logDetail',
+        meta: { title: '所有借书日志', icon: 'personal', roles: ['admin', 'contentManager'] },
+        component: () => import('@/views/borrowlog/index')
+      },
+      {
+        path: 'operateLog',
+        meta: { title: '操作日志', icon: 'operateLog', roles: ['admin', 'contentManager'] },
+        component: () => import('@/views/operatelog/index')
       }
     ]
   },
@@ -231,17 +239,18 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title: '用户管理',
-      icon: 'userAdmin'
+      icon: 'userManage'
     },
     children: [
       {
         path: 'userInfo',
         component: () => import('@/views/user/index'),
-        meta: { title: '用户信息管理', icon: 'nested', roles: ['admin'] }
+        meta: { title: '用户管理', icon: 'userAdmin', roles: ['admin'] }
       },
       {
-        path: 'void',
-        meta: { title: '用户信息管理——无权限', icon: 'nested' }
+        path: 'personalInfo',
+        meta: { title: '个人信息管理', icon: 'personal' },
+        component: () => import('@/views/user/personalInfo')
       }
     ]
   },

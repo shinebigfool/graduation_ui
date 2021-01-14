@@ -138,7 +138,7 @@
 <script>
 import userSearchBar from '@/views/user/userSearchBar'
 import ImgUpload from '@/views/table/ImgUpload'
-import { blackList, deleteUser, getWholeUser, listRoles, modUser } from '@/api/user'
+import { blackList, deleteUser, listRoles, modUser, qryUsersPage } from '@/api/user'
 
 export default {
   components: { userSearchBar, ImgUpload },
@@ -197,7 +197,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getWholeUser({ 'current': this.currentPage, 'size': this.size }).then(response => {
+      qryUsersPage({ 'current': this.currentPage, 'size': this.size }).then(response => {
         // console.log(response.retList)
         this.users = response.retList
         this.total = response.totalRow
@@ -218,16 +218,16 @@ export default {
       var keyword = this.$refs.searchBar.keywords
       console.log(keyword)
       if (keyword === '' || keyword === undefined || keyword == null) {
-        getWholeUser({ 'current': page, 'size': this.size }).then(response => {
+        qryUsersPage({ 'current': page, 'size': this.size }).then(response => {
           console.log(response.retList)
-          this.list = response.retList
+          this.users = response.retList
           this.total = response.totalRow
           this.listLoading = false
         })
       } else {
-        getWholeUser({ 'current': page, 'size': this.size, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
+        qryUsersPage({ 'current': page, 'size': this.size, 'name': keyword, 'uname': keyword, 'cid': keyword }).then(response => {
           console.log(response.retList)
-          this.list = response.retList
+          this.users = response.retList
           this.total = response.totalRow
           this.listLoading = false
         })
@@ -236,9 +236,9 @@ export default {
     searchResult() {
       this.listLoading = true
       var keyword = this.$refs.searchBar.keywords
-      getWholeUser({ 'current': 1, 'size': this.size, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
-        console.log(response.retList)
-        this.list = response.retList
+      qryUsersPage({ 'current': 1, 'size': this.size, 'name': keyword, 'uname': keyword, 'cid': keyword }).then(response => {
+        console.log(response)
+        this.users = response.retList
         this.total = response.totalRow
         this.listLoading = false
       })

@@ -2,7 +2,7 @@
   <div style="margin-bottom: 30px;display: flex;justify-content: center;align-items: center">
     <el-input
       v-model="keywords"
-      placeholder="根据搜索..."
+      placeholder="根据用户账户、所在班级或者用户昵称搜索..."
       prefix-icon="el-icon-search"
       size="small"
       style="width: 400px;margin-right: 10px"

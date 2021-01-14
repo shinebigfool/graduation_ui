@@ -55,13 +55,19 @@
             <el-checkbox label="10" name="type">教师</el-checkbox>
             <el-checkbox label="11" name="type">家长</el-checkbox>
             <el-checkbox label="3" name="type">访客</el-checkbox>
+            <el-checkbox label="2" name="type">内容管理员</el-checkbox>
             <el-checkbox label="管理员" name="type" disabled />
           </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="主班级">
+          <el-select v-model="selectedClass" placeholder="请选择班级">
+            <el-option v-for="(item,index) in classList" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
         </el-form-item>
         <el-form-item label="性别">
           <el-radio-group v-model="form.sex">
             <el-radio label="1">男</el-radio>
-            <el-radio label="0">女</el-radio>
+            <el-radio label="2">女</el-radio>
           </el-radio-group>
         </el-form-item>
 
@@ -79,6 +85,7 @@
 <script>
 import ImgUpload from '../table/ImgUpload.vue'
 import { regist } from '@/api/user'
+import { qryClass } from '@/api/schoolClass'
 export default {
   name: 'UserRegist',
   components: { ImgUpload },
@@ -101,8 +108,20 @@ export default {
         roles: [],
         photoUrl: '',
         birthday: ''
-      }
+      },
+      classList: [{
+        classId: '',
+        className: '',
+        classGrade: '',
+        createTime: '',
+        userAmount: '',
+        name: ''
+      }],
+      selectedClass: ''
     }
+  },
+  mounted() {
+    this.fetchClassList()
   },
   methods: {
     onSubmit() {
@@ -119,7 +138,8 @@ export default {
             email: this.form.email,
             roles: this.form.roles,
             photoUrl: this.form.photoUrl,
-            birthday: this.form.birthday
+            birthday: this.form.birthday,
+            classId: this.selectedClass
           }).then(response => {
             console.log(response)
             _this.$message.success('操作成功')
@@ -157,6 +177,14 @@ export default {
         } else {
           console.log(valid, 'no submit')
         }
+      })
+    },
+    fetchClassList() {
+      qryClass().then(response => {
+        console.log(response)
+        this.classList = response.retList
+      }).catch(fail => {
+        console.log(fail)
       })
     }
 

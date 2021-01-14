@@ -23,10 +23,11 @@ export function logout() {
   })
 }
 // 分页查询用户支持按账号精准查
-export function getWholeUser() {
+export function getWholeUser(params) {
   return request({
     url: '/user/page',
-    method: 'get'
+    method: 'get',
+    params: params
   })
 }
 // 注册，支持带角色注册，已加权限验证

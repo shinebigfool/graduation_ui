@@ -10,7 +10,7 @@
       fit
       highlight-current-row
     >
-      <el-table-column label="用户账户" min-width="70" align="center">
+      <el-table-column label="借阅人" min-width="70" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.userAccount }}</span>
         </template>
@@ -145,6 +145,8 @@ export default {
         this.list = response.retList
         this.total = response.totalRow
         this.listLoading = false
+      }).catch(fail => {
+        this.$message.error(fail.retMsg)
       })
     },
     filterStatus(value, row) {
@@ -169,15 +171,19 @@ export default {
           console.log(response.retList)
           this.list = response.retList
           this.total = response.totalRow
-          this.listLoading = false
+        }).catch(fail => {
+          this.$message.error(fail.retMsg)
         })
+        this.listLoading = false
       } else {
         getBorrowLog({ 'current': page, 'size': this.size, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
           console.log(response.retList)
           this.list = response.retList
           this.total = response.totalRow
-          this.listLoading = false
+        }).catch(fail => {
+          this.$message.error(fail.retMsg)
         })
+        this.listLoading = false
       }
     },
     searchResult() {
@@ -187,8 +193,10 @@ export default {
         console.log(response.retList)
         this.list = response.retList
         this.total = response.totalRow
-        this.listLoading = false
+      }).catch(fail => {
+        this.$message.error(fail.retMsg)
       })
+      this.listLoading = false
     }
   }
 }

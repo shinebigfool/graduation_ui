@@ -89,3 +89,19 @@ export function qryFavroiteBooks(params) {
     params: params
   })
 }
+// 收藏榜
+export function favoriteCount(params) {
+  return request({
+    url: '/book/favoriteCount',
+    method: 'get',
+    params: params
+  })
+}
+// 借阅榜
+export function lendCount(params) {
+  return request({
+    url: '/borrow/lendCount',
+    method: 'get',
+    params: params
+  })
+}

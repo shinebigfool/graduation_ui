@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="'/index'"
+    :default-active="'/page'"
     router
     mode="horizontal"
     background-color="white"
@@ -24,10 +24,10 @@ export default {
   data() {
     return {
       navList: [
-        { name: '/index', navItem: '首页' },
-        { name: '/jotter', navItem: '笔记本' },
+        { name: '/page', navItem: '首页' },
         { name: '/library', navItem: '图书馆' },
-        { name: '/admin', navItem: '个人中心' }
+        { name: '/admin', navItem: '个人中心' },
+        { name: '/index', navItem: '开发日志' }
       ]
     }
   },

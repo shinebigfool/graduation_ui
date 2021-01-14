@@ -6,7 +6,7 @@
     </el-select>
     &#12288; &#12288;&#12288;
     <el-button type="primary" @click="clear">重置</el-button>
-
+    <student-info-dialog ref="userDetail" />
     <el-table
       ref="user"
       v-loading="listLoading"
@@ -57,15 +57,15 @@
           <span>{{ scope.row.birthday }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="手机号" min-width="100" align="center">
+      <el-table-column label="主班级" min-width="100" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.phone }}</span>
+          <span>{{ scope.row.className }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" align="center" min-width="80">
         <template slot-scope="scope">
-          <el-button type="text" @click="modifyUser(scope.row)">用户详情</el-button>
+          <el-button type="text" @click="userDetail(scope.row)">用户详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,6 +88,7 @@
 <script>
 import { qryClass, addUser } from '@/api/schoolClass'
 import { qryUsersPage } from '@/api/user'
+import studentInfoDialog from '@/views/schoolClass/studentInfoDialog'
 export default {
   filters: {
     formatSex(sex) {
@@ -107,6 +108,7 @@ export default {
       return roleMap[role]
     }
   },
+  components: { studentInfoDialog },
   data() {
     return {
       classList: [{
@@ -139,7 +141,7 @@ export default {
       })
     },
     fetchUserList() {
-      qryUsersPage({ 'current': this.currentPage, 'size': this.size, 'cid': this.selectedClass })
+      qryUsersPage({ 'current': this.currentPage, 'size': this.size })
         .then(response => {
           console.log(response)
           this.users = response.retList
@@ -175,6 +177,7 @@ export default {
       addUser({ 'cid': this.selectedClass, uids }).then(response => {
         console.log(response)
         this.$message.success(response.retMsg)
+        this.fetchUserList()
       }).catch(fail => {
         console.log(fail)
       })
@@ -182,6 +185,20 @@ export default {
     },
     filterRole(value, row) {
       return row.mainRole === value
+    },
+    userDetail(data) {
+      console.log(data)
+      this.$refs.userDetail.form = {
+        id: data.id,
+        name: data.name,
+        uname: data.uname,
+        sex: data.sex,
+        age: data.age,
+        birthday: data.birthday,
+        className: data.className,
+        photoUrl: data.photoUrl
+      }
+      this.$refs.userDetail.dialogFormVisible = true
     }
   }
 }

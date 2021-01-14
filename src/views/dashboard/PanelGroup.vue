@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel" @click="handleSetLineChartData('borrowLog')">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="book" class-name="card-panel-icon" />
         </div>
@@ -17,7 +17,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel" @click="handleSetLineChartData('borrowLog')">
         <div class="card-panel-icon-wrapper icon-message">
           <svg-icon icon-class="bookMonth" class-name="card-panel-icon" />
         </div>
@@ -33,7 +33,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
+      <div class="card-panel" @click="handleSetLineChartData('borrowLog')">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="bookBorrow" class-name="card-panel-icon" />
         </div>
@@ -49,7 +49,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel" @click="handleSetLineChartData('favorite')">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="favorite1" class-name="card-panel-icon" />
         </div>

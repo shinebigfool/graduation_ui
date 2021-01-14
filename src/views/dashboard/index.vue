@@ -33,7 +33,14 @@ export default {
   },
   methods: {
     handleSetLineChartData(type) {
-      console.log(type)
+      if (type === 'borrowLog') {
+        console.log('Log')
+        this.$router.push('/log/personnalLog')
+      }
+      if (type === 'favorite') {
+        console.log('favorite')
+        this.$router.push('/favorite/index')
+      }
     },
     fetchReportData() {
       fetchRecentData().then(response => {

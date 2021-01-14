@@ -39,3 +39,43 @@ export function removeUser(params) {
     data: params
   })
 }
+// 按班级统计阅读量
+export function qryReadingAmountByClass(params) {
+  return request({
+    url: '/class/readingAmountByClass',
+    method: 'get',
+    params: params
+  })
+}
+// 按年级统计阅读量
+export function qryReadingAmountByGrade(params) {
+  return request({
+    url: '/class/readingAmountByGrade',
+    method: 'get',
+    params: params
+  })
+}
+// 按班级统计活跃人数
+export function qryReadingStuByClass(params) {
+  return request({
+    url: '/class/readingStuByClass',
+    method: 'get',
+    params: params
+  })
+}
+//  按年级统计活跃人数
+export function qryReadingStuByGrade(params) {
+  return request({
+    url: '/class/readingStuByGrade',
+    method: 'get',
+    params: params
+  })
+}
+// 删除班级
+export function delClass(params) {
+  return request({
+    url: '/class/class',
+    method: 'delete',
+    data: params
+  })
+}

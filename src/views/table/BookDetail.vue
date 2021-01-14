@@ -66,7 +66,7 @@
 <script>
 import ImgUpload from './ImgUpload'
 import { modifyBook } from '@/api/table'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'BookDetail',
   components: { ImgUpload },
@@ -94,6 +94,11 @@ export default {
       },
       formLabelWidth: '120px'
     }
+  },
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
   },
   methods: {
     clear() {

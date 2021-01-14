@@ -85,8 +85,8 @@
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
           <el-button type="text" @click.native.stop="checkDetail(scope.row)">详情</el-button>
-          <el-button type="text" @click.native.stop="examineBook(scope.row)">审批</el-button>
-          <el-button type="text" @click.native.stop="deleteBook(scope.row)">下架</el-button>
+          <el-button v-if="roles.includes('admin')||roles.includes('contentManager')" type="text" @click.native.stop="examineBook(scope.row)">审批</el-button>
+          <el-button v-if="roles.includes('admin')||roles.includes('contentManager')" type="text" @click.native.stop="deleteBook(scope.row)">下架</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -111,6 +111,7 @@ import BookDetail from '@/views/table/BookDetail'
 import SearchBar from '@/views/table/SearchBar'
 import ExamineBookDetail from '@/views/table/ExamineBookDetail'
 import { deleteBook } from '@/api/table'
+import { mapGetters } from 'vuex'
 export default {
   components: { SearchBar, BookDetail, ExamineBookDetail },
   filters: {
@@ -171,6 +172,11 @@ export default {
       size: 10,
       currentPage: 1
     }
+  },
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
   },
   created() {
     this.fetchData()

@@ -6,7 +6,7 @@
     </el-select>
     &#12288; &#12288;&#12288;
     <el-button type="primary" @click="clear">重置</el-button>
-
+    <student-info-dialog ref="userDetail" />
     <el-table
       ref="user"
       v-loading="listLoading"
@@ -65,12 +65,12 @@
 
       <el-table-column label="操作" align="center" min-width="80">
         <template slot-scope="scope">
-          <el-button type="text" @click="modifyUser(scope.row)">用户详情</el-button>
+          <el-button type="text" @click="userDetail(scope.row)">用户详情</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-button type="primary" style="margin : 50px " @click="removeStu">移出班级</el-button>
+    <el-button v-if="roles.includes('admin')||roles.includes('contentManager')" type="primary" style="margin : 50px " @click="removeStu">移出班级</el-button>
 
     <div style="margin: 20px 0 50px 0">
       <el-pagination
@@ -88,6 +88,8 @@
 <script>
 import { qryClass, removeUser } from '@/api/schoolClass'
 import { qryUsersPage } from '@/api/user'
+import { mapGetters } from 'vuex'
+import studentInfoDialog from '@/views/schoolClass/studentInfoDialog'
 export default {
   filters: {
     formatSex(sex) {
@@ -107,6 +109,7 @@ export default {
       return roleMap[role]
     }
   },
+  components: { studentInfoDialog },
   data() {
     return {
       classList: [{
@@ -125,7 +128,16 @@ export default {
       currentPage: 1
     }
   },
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
+  },
   mounted() {
+    if (typeof this.$route.query.cid !== 'undefined') {
+      this.selectedClass = this.$route.query.cid
+      console.log(this.selectedClass)
+    }
     this.fetchClassList()
     this.fetchUserList()
   },
@@ -181,6 +193,20 @@ export default {
     },
     filterRole(value, row) {
       return row.mainRole === value
+    },
+    userDetail(data) {
+      console.log(data)
+      this.$refs.userDetail.form = {
+        id: data.id,
+        name: data.name,
+        uname: data.uname,
+        sex: data.sex,
+        age: data.age,
+        birthday: data.birthday,
+        className: data.className,
+        photoUrl: data.photoUrl
+      }
+      this.$refs.userDetail.dialogFormVisible = true
     }
   }
 }
