@@ -108,15 +108,14 @@
             v-model="scope.row.enabled"
             active-color="#13ce66"
             inactive-color="#ff4949"
-            disabled
+            @change="disableUser(scope.row)"
           />
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="80">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" round @click="modifyUser(scope.row)">修改信息</el-button><br>
-          <el-button type="warning" size="small" round @click="disableUser(scope.row)">拉黑/解封</el-button><br>
-          <el-button type="danger" size="small" round @click="deleteUser(scope.row)">删除/移除</el-button>
+          <el-button type="text" size="small" round @click="modifyUser(scope.row)">修改</el-button><br>
+          <el-button type="text" size="small" round @click="deleteUser(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -244,6 +243,7 @@ export default {
       })
     },
     disableUser(user) {
+      console.log(user)
       this.$confirm('此操作将改变该用户账号状态，是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -256,6 +256,7 @@ export default {
           this.$message.success('操作成功')
         })
       }).catch(() => {
+        user.enabled = !user.enabled
         this.$message.info('已取消')
       })
     },

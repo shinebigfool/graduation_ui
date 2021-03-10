@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- action="http://192.168.225.128:2048/book/cover" -->
+    <!-- action="http://127.0.0.1:2048/book/cover" -->
     <el-upload
       class="upload-demo"
       action="http://127.0.0.1:2048/book/cover"

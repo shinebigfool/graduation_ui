@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <el-dialog
       title="修改班级信息"
       :visible.sync="dialogFormVisible"
@@ -33,6 +33,7 @@
         <el-button type="primary" @click="onSubmit">确 定</el-button>
       </div>
     </el-dialog>
+    <h1>班级详情</h1>
     <el-table
       v-loading="listLoading"
       :data="classes"
@@ -78,8 +79,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="80">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" round @click.native.stop="modifyClass(scope.row)">详细信息</el-button>
-          <el-button type="primary" size="small" round @click.native.stop="delClass(scope.row)">删除班级</el-button>
+          <el-button type="text" size="small" round @click.native.stop="modifyClass(scope.row)">详细信息</el-button><br>
+          <el-button type="text" size="small" round @click.native.stop="delClass(scope.row)">删除班级</el-button>
         </template>
       </el-table-column>
 

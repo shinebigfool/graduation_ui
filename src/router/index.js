@@ -254,7 +254,45 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/affair',
+    component: Layout,
+    meta: {
+      title: '事务大厅',
+      icon: 'affair'
+    },
+    children: [
+      {
+        path: 'addAffair',
+        component: () => import('@/views/affair/index'),
+        meta: { title: '新建事务', icon: 'addAffair' },
+        children: [
+          {
+            path: 'overdue',
+            meta: { title: '超期管理', icon: 'overDue' },
+            component: () => import('@/views/affair/createAffair')
 
+          },
+          {
+            path: 'lossBook',
+            meta: { title: '遗失图书', icon: 'loss' }
+          },
+          {
+            path: 'applyBook',
+            meta: { title: '申请购书', icon: 'loss' }
+          }
+        ]
+      },
+      {
+        path: 'myAffair',
+        meta: { title: '我的申请', icon: 'loss' }
+      },
+      {
+        path: 'affairQueue',
+        meta: { title: '待办流程', icon: 'loss' }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

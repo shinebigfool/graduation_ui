@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
+    <h1>收藏夹</h1>
     <log-detail ref="logDetail" @onSubmit="fetchData" />
-    <search-bar ref="searchBar" @onSearch="searchResult" />
+    <favorite-search ref="FavoriteSearch" @onSearch="searchResult" />
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -87,25 +88,28 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-row>
+    <div style="margin: 20px 0 50px 0">
       <el-pagination
         background
-        :current-page="currentPage"
-        :page-size="pageSize"
+        style="float:right;"
+        layout="total, prev, pager, next, jumper"
+        :page-size="size"
         :total="total"
+        :current-page="current"
         @current-change="handleCurrentChange"
       />
-    </el-row>
+    </div>
   </div>
 </template>
 
 <script>
-import { listFavoriteBooks, showBookDetail, removeFavoriteBook, qryFavroiteBooks } from '@/api/table'
-import SearchBar from '@/views/table/SearchBar'
+import { showBookDetail, removeFavoriteBook, qryFavroiteBooks } from '@/api/table'
+
 import LogDetail from '@/views/personnalBorrow/logDetail'
+import FavoriteSearch from '@/views/favorite/FavoriteSearch'
 
 export default {
-  components: { SearchBar, LogDetail },
+  components: { LogDetail, FavoriteSearch },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -160,8 +164,11 @@ export default {
       list: null,
       listLoading: true,
       total: 0,
-      currentPage: 1,
-      pageSize: 10
+      current: 1,
+      size: 10,
+      title: '',
+      name: '',
+      cid: ''
     }
   },
   created() {
@@ -170,14 +177,14 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      listFavoriteBooks().then(response => {
+      qryFavroiteBooks({ 'current': this.current, 'size': this.size,
+        'title': this.title, 'author': this.name, 'uploadPerson': this.name, 'cid': this.cid
+      }).then(response => {
         console.log(response.retList)
         this.list = response.retList
-        this.total = response.retList.length
+        this.total = response.totalRow
       }).catch(fail => {
-        this.$message(fail => {
-          fail.retMsg
-        })
+        this.$message.error(fail.retMsg)
       })
       this.listLoading = false
     },
@@ -221,6 +228,7 @@ export default {
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
+      this.fetchData()
     },
     filterStatus(value, row) {
       return row.examineState === value
@@ -232,18 +240,11 @@ export default {
       return row.availableState === value
     },
     searchResult() {
-      var keyword = this.$refs.searchBar.keywords
-      this.listLoading = true
-      qryFavroiteBooks({ 'title': keyword, 'author': keyword, 'uploadPerson': keyword })
-        .then(response => {
-          console.log(response)
-          this.list = response.retList
-          this.total = response.retList.length
-        }).catch(fail => {
-          this.$message.error(fail.retMsg)
-        })
-      this.listLoading = false
-      console.log(keyword)
+      this.current = 1
+      this.cid = this.$refs.FavoriteSearch.cid
+      this.name = this.$refs.FavoriteSearch.name
+      this.title = this.$refs.FavoriteSearch.title
+      this.fetchData()
     }
   }
 }

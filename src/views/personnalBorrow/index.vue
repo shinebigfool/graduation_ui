@@ -1,6 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 <template>
   <div class="app-container">
+    <h1>借书日志</h1>
     <log-detail ref="logDetail" @onSubmit="fetchData" />
     <search-bar ref="searchBar" @onSearch="searchResult" />
     <el-table
@@ -79,22 +80,24 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-row>
+    <div style="margin: 20px 0 50px 0">
       <el-pagination
         background
+        style="float:right;"
+        layout="total, prev, pager, next, jumper"
+        :page-size="size"
+        :total="total"
         :current-page="currentPage"
-        :page-size="pageSize"
-        :total="list.length"
         @current-change="handleCurrentChange"
       />
-    </el-row>
+    </div>
 
   </div>
 </template>
 
 <script>
 import { getPersonnelLog, getLogDetail } from '@/api/borrowLog'
-import SearchBar from '@/views/table/SearchBar'
+import SearchBar from '@/views/personnalBorrow/SearchBar'
 import LogDetail from '@/views/personnalBorrow/logDetail'
 export default {
   components: { SearchBar, LogDetail },
@@ -130,8 +133,12 @@ export default {
       list: [],
       listLoading: true,
       total: 0,
-      pageSize: 10,
-      currentPage: 1
+      size: 10,
+      currentPage: 1,
+      title: '',
+      name: '',
+      cid: '',
+      borrowState: ''
     }
   },
   created() {
@@ -140,9 +147,16 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getPersonnelLog({}).then(response => {
+      getPersonnelLog({ 'current': this.currentPage, 'size': this.size,
+        'title': this.title, 'author': this.name, 'uploadPerson': this.name, 'cid': this.cid,
+        'borrowState': this.borrowState
+      }).then(response => {
         console.log(response.retList)
         this.list = response.retList
+        this.listLoading = false
+        this.total = response.totalRow
+      }).catch(error => {
+        this.$message.error(error.retMsg)
         this.listLoading = false
       })
     },
@@ -154,10 +168,15 @@ export default {
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
+      this.fetchData()
     },
     searchResult() {
-      var keyword = this.$refs.searchBar.keywords
-      console.log(keyword)
+      this.currentPage = 1
+      this.cid = this.$refs.searchBar.cid
+      this.name = this.$refs.searchBar.name
+      this.title = this.$refs.searchBar.title
+      this.borrowState = this.$refs.searchBar.borrowState
+      this.fetchData()
     },
     showLogDetail(log) {
       console.log(log.state)

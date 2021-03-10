@@ -1,6 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 <template>
   <div class="app-container">
+    <h1>图书详情</h1>
     <book-detail ref="detail" @onSubmit="fetchData" />
     <examine-book-detail ref="examine_detail" @onSubmit="fetchData" />
     <search-bar ref="searchBar" @onSearch="searchResult" />
@@ -170,7 +171,10 @@ export default {
       listLoading: true,
       total: 0,
       size: 10,
-      currentPage: 1
+      currentPage: 1,
+      title: '',
+      name: '',
+      cid: ''
     }
   },
   computed: {
@@ -184,7 +188,9 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList({ 'current': this.currentPage, 'size': this.size }).then(response => {
+      getList({ 'current': this.currentPage, 'size': this.size,
+        'title': this.title, 'author': this.name, 'uploadPerson': this.name, 'cid': this.cid
+      }).then(response => {
         console.log(response.retList)
         this.list = response.retList
         this.total = response.totalRow
@@ -251,34 +257,14 @@ export default {
     handleCurrentChange(page) {
       console.log(page)
       this.currentPage = page
-      this.listLoading = true
-      var keyword = this.$refs.searchBar.keywords
-      console.log(keyword)
-      if (keyword === '' || keyword === undefined || keyword == null) {
-        getList({ 'current': page, 'size': this.size }).then(response => {
-          console.log(response.retList)
-          this.list = response.retList
-          this.total = response.totalRow
-          this.listLoading = false
-        })
-      } else {
-        getList({ 'current': page, 'size': this.size, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
-          console.log(response.retList)
-          this.list = response.retList
-          this.total = response.totalRow
-          this.listLoading = false
-        })
-      }
+      this.fetchData()
     },
     searchResult() {
-      this.listLoading = true
-      var keyword = this.$refs.searchBar.keywords
-      getList({ 'current': 1, 'size': this.size, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
-        console.log(response.retList)
-        this.list = response.retList
-        this.total = response.totalRow
-        this.listLoading = false
-      })
+      this.currentPage = 1
+      this.cid = this.$refs.searchBar.cid
+      this.name = this.$refs.searchBar.name
+      this.title = this.$refs.searchBar.title
+      this.fetchData()
     },
     filterBorrow(value, row) {
       return row.availableState === value

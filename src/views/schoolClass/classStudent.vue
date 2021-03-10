@@ -1,11 +1,7 @@
 <template>
-  <div>
-    &#12288; &#12288; 请选择班级:
-    <el-select v-model="selectedClass" placeholder="请选择班级" @change="selectChange">
-      <el-option v-for="(item,index) in classList" :key="index" :label="item.name" :value="item.id" />
-    </el-select>
-    &#12288; &#12288;&#12288;
-    <el-button type="primary" @click="clear">重置</el-button>
+  <div class="app-container">
+    <h1>用户录入</h1>
+    <search-bar ref="searchBar" @onSearch="searchResult" />
     <student-info-dialog ref="userDetail" />
     <el-table
       ref="user"
@@ -89,6 +85,7 @@
 import { qryClass, addUser } from '@/api/schoolClass'
 import { qryUsersPage } from '@/api/user'
 import studentInfoDialog from '@/views/schoolClass/studentInfoDialog'
+import SearchBar from '@/views/schoolClass/SearchBar'
 export default {
   filters: {
     formatSex(sex) {
@@ -108,7 +105,7 @@ export default {
       return roleMap[role]
     }
   },
-  components: { studentInfoDialog },
+  components: { studentInfoDialog, SearchBar },
   data() {
     return {
       classList: [{
@@ -124,7 +121,9 @@ export default {
       listLoading: true,
       total: 0,
       size: 10,
-      currentPage: 1
+      currentPage: 1,
+      uname: '',
+      name: ''
     }
   },
   mounted() {
@@ -136,12 +135,15 @@ export default {
       qryClass().then(response => {
         console.log(response)
         this.classList = response.retList
+        this.$refs.searchBar.classList = this.classList
       }).catch(fail => {
         console.log(fail)
       })
     },
     fetchUserList() {
-      qryUsersPage({ 'current': this.currentPage, 'size': this.size })
+      qryUsersPage({ 'current': this.currentPage, 'size': this.size,
+        'name': this.name, 'uname': this.uname
+      })
         .then(response => {
           console.log(response)
           this.users = response.retList
@@ -151,9 +153,7 @@ export default {
         })
       this.listLoading = false
     },
-    selectChange() {
 
-    },
     clear() {
       this.selectedClass = ''
       this.$refs.user.clearSelection()
@@ -199,6 +199,12 @@ export default {
         photoUrl: data.photoUrl
       }
       this.$refs.userDetail.dialogFormVisible = true
+    },
+    searchResult() {
+      this.selectedClass = this.$refs.searchBar.selectedClass
+      this.name = this.$refs.searchBar.name
+      this.uname = this.$refs.searchBar.uname
+      this.fetchUserList()
     }
   }
 }

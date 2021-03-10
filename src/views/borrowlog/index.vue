@@ -94,7 +94,7 @@
 
 <script>
 import { getBorrowLog } from '@/api/borrowLog'
-import SearchBar from '@/views/table/SearchBar'
+import SearchBar from '@/views/borrowlog/SearchBar'
 
 export default {
   components: { SearchBar },
@@ -131,7 +131,12 @@ export default {
       listLoading: true,
       total: 0,
       size: 10,
-      currentPage: 1
+      currentPage: 1,
+      title: '',
+      name: '',
+      cid: '',
+      borrowName: '',
+      borrowState: ''
     }
   },
   created() {
@@ -140,7 +145,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getBorrowLog({ 'current': 1, 'size': this.size }).then(response => {
+      getBorrowLog({ 'current': this.currentPage, 'size': this.size,
+        'title': this.title, 'author': this.name, 'uploadPerson': this.name, 'cid': this.cid,
+        'name': this.borrowName, 'borrowState': this.borrowState
+      }).then(response => {
         console.log(response.retList)
         this.list = response.retList
         this.total = response.totalRow
@@ -163,40 +171,16 @@ export default {
     handleCurrentChange(page) {
       console.log(page)
       this.currentPage = page
-      this.listLoading = true
-      var keyword = this.$refs.searchBar.keywords
-      console.log(keyword)
-      if (keyword === '' || keyword === undefined || keyword == null) {
-        getBorrowLog({ 'current': page, 'size': this.size }).then(response => {
-          console.log(response.retList)
-          this.list = response.retList
-          this.total = response.totalRow
-        }).catch(fail => {
-          this.$message.error(fail.retMsg)
-        })
-        this.listLoading = false
-      } else {
-        getBorrowLog({ 'current': page, 'size': this.size, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
-          console.log(response.retList)
-          this.list = response.retList
-          this.total = response.totalRow
-        }).catch(fail => {
-          this.$message.error(fail.retMsg)
-        })
-        this.listLoading = false
-      }
+      this.fetchData()
     },
     searchResult() {
-      this.listLoading = true
-      var keyword = this.$refs.searchBar.keywords
-      getBorrowLog({ 'current': 1, 'size': this.size, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
-        console.log(response.retList)
-        this.list = response.retList
-        this.total = response.totalRow
-      }).catch(fail => {
-        this.$message.error(fail.retMsg)
-      })
-      this.listLoading = false
+      this.currentPage = 1
+      this.borrowName = this.$refs.searchBar.borrowName
+      this.cid = this.$refs.searchBar.cid
+      this.name = this.$refs.searchBar.name
+      this.title = this.$refs.searchBar.title
+      this.borrowState = this.$refs.searchBar.borrowState
+      this.fetchData()
     }
   }
 }

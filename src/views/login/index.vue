@@ -176,7 +176,7 @@ $light_gray:#eee;
   min-height: 100%;
   width: 100%;
   // background-color: $bg;
-  background: url("../../assets/back2.jpg") no-repeat center;
+  background: url("../../assets/6.jpg") no-repeat center;
   overflow: hidden;
 
   .login-form {

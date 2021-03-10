@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="app-container">
+    <h1>班级信息</h1>
     &#12288; &#12288; 请选择班级:
     <el-select v-model="selectedClass" placeholder="请选择班级" @change="selectChange">
       <el-option v-for="(item,index) in classList" :key="index" :label="item.name" :value="item.id" />
     </el-select>
     &#12288; &#12288;&#12288;
-    <el-button type="primary" @click="clear">重置</el-button>
+    <el-button type="primary" @click="clear">重置</el-button><br>
     <student-info-dialog ref="userDetail" />
     <el-table
       ref="user"
