@@ -36,8 +36,8 @@
             <el-option label="科技" :value="6" />
           </el-select>
         </el-form-item>
-        <el-form-item label="是否过审" :label-width="formLabelWidth" prop="examineState">
-          <el-tag :type="form.examineState|examineFilter">{{ form.examineState|formatExamine }}</el-tag>
+        <el-form-item label="阅览地址" :label-width="formLabelWidth" prop="onlineUrl">
+          <a :href="form.onlineUrl" target="_blank">传送门</a>
         </el-form-item>
         <el-form-item label="上传者" :label-width="formLabelWidth" prop="uploadPerson">
           <el-input v-model="form.uploadPerson" autocomplete="off" :readonly="true" />
@@ -118,7 +118,8 @@ export default {
         favorite: '',
         availableState: '',
         ifReturn: '',
-        borrowPerson: ''
+        borrowPerson: '',
+        onlineUrl: ''
       },
       formLabelWidth: '120px'
     }
@@ -187,5 +188,8 @@ export default {
     width: 230px;
     height: 344px;
     /*margin: 0 auto;*/
+  }
+    a:link, a:visited, a:focus {
+    color: #3377aa;
   }
 </style>

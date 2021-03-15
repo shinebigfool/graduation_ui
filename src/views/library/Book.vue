@@ -5,7 +5,7 @@
     >
       <search-bar ref="searchBar" @onSearch="searchResult" />
       <el-tooltip
-        v-for="item in books.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+        v-for="item in books"
         :key="item.id"
         effect="dark"
         placement="right"
@@ -28,7 +28,7 @@
           </div>
           <div class="info">
             <div class="title">
-              <a href="" target="_blank">{{ item.title }}</a>
+              <a :href="item.onlineUrl" target="_blank">{{ item.title }}</a>
             </div>
           </div>
           <div class="author">{{ item.author }}</div>
@@ -40,6 +40,7 @@
       <el-pagination
         background
         :current-page="currentPage"
+        layout="total, prev, pager, next, jumper"
         :page-size="pageSize"
         :total="total"
         @current-change="handleCurrentChange"
@@ -48,7 +49,7 @@
   </div>
 </template>
 <script>
-import SearchBar from '@/views/table/SearchBar'
+import SearchBar from '@/views/library/SearchBar'
 import BorrowForm from '@/views/library/BorrowForm'
 import { getList } from '@/api/table'
 import { showBookDetail } from '@/api/table'
@@ -61,7 +62,9 @@ export default {
       currentPage: 1,
       pageSize: 18,
       total: 0,
-      cid: 0
+      cid: 0,
+      title: '',
+      name: ''
     }
   },
 
@@ -70,19 +73,21 @@ export default {
   },
   methods: {
     loadBooks() {
-      getList({ 'cid': this.cid, 'current': 1, 'size': 1000 }).then(response => {
+      getList({ 'cid': this.cid, 'current': this.currentPage,
+        'size': this.pageSize, 'title': this.title, 'author': this.name, 'uploadPerson': this.name }).then(response => {
         this.books = response.retList
         this.total = response.totalRow
       })
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
+      this.loadBooks()
     },
     searchResult() {
-      const keyword = this.$refs.searchBar.keywords
-      getList({ 'current': 1, 'size': 1000, 'title': keyword, 'author': keyword, 'uploadPerson': keyword }).then(response => {
-        this.books = response.retList
-      })
+      this.currentPage = 1
+      this.title = this.$refs.searchBar.title
+      this.name = this.$refs.searchBar.name
+      this.loadBooks()
     },
     showBookDetail(item) {
       showBookDetail({ 'id': item.id }).then(response => {
@@ -105,7 +110,8 @@ export default {
           examineNote: book.examineNote,
           updateDate: book.updateDate,
           favorite: book.favorite,
-          availableState: book.availableState
+          availableState: book.availableState,
+          onlineUrl: book.onlineUrl
         }
       }).catch(() => {
         this.dialogFormVisible = false

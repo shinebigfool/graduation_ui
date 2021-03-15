@@ -29,6 +29,9 @@
           <el-input v-model="form.cover" autocomplete="off" placeholder="图片 URL" />
           <img-upload ref="imgUpload" @onUpload="uploadImg" />
         </el-form-item>
+        <el-form-item label="阅览地址" prop="onlineUrl" :label-width="formLabelWidth">
+          <el-input v-model="form.onlineUrl" autocomplete="off" placeholder="线上阅览URL" />
+        </el-form-item>
         <el-form-item label="简介" :label-width="formLabelWidth" prop="abs">
           <el-input v-model="form.abs" type="textarea" autocomplete="off" :autosize="{minRows:4,maxRows:8}" placeholder="简介" />
         </el-form-item>
@@ -72,7 +75,8 @@ export default {
         examineState: '',
         examinePerson: '',
         examineNote: '',
-        updateDate: ''
+        updateDate: '',
+        onlineUrl: ''
       },
       formLabelWidth: '120px'
     }
@@ -106,7 +110,8 @@ export default {
         examineState: '',
         examinePerson: '',
         examineNote: '',
-        updateDate: ''
+        updateDate: '',
+        onlineUrl: ''
       }
     }
   }

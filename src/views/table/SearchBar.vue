@@ -24,6 +24,16 @@
       <el-option label="经管" :value="5" />
       <el-option label="科技" :value="6" />
     </el-select>
+    <el-select v-model="examineState" placeholder="按审核状态..." size="small" style="width: 200px;margin-right: 15px">
+      <el-option label="待审核" :value="0" />
+      <el-option label="已过审" :value="1" />
+      <el-option label="未过审" :value="2" />
+    </el-select>
+    <el-select v-model="availableState" placeholder="按可用状态..." size="small" style="width: 200px;margin-right: 15px">
+      <el-option label="可借" :value="1" />
+      <el-option label="不可借" :value="0" />
+      <el-option label="已下架" :value="3" />
+    </el-select>
     <el-button size="small" type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
     <el-button size="small" type="primary" icon="el-icon-search" @click="refresh">重置</el-button>
   </div>
@@ -36,7 +46,9 @@ export default {
     return {
       title: '',
       name: '',
-      cid: ''
+      cid: '',
+      examineState: '',
+      availableState: ''
     }
   },
   methods: {
@@ -47,6 +59,8 @@ export default {
       this.title = ''
       this.name = ''
       this.cid = ''
+      this.examineState = ''
+      this.availableState = ''
       this.searchClick()
     }
   }

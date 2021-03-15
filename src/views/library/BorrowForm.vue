@@ -29,6 +29,9 @@
         <el-form-item label="简介" :label-width="formLabelWidth" prop="abs">
           <el-input v-model="form.abs" type="textarea" autocomplete="off" :autosize="{minRows:4,maxRows:8}" :readonly="true" />
         </el-form-item>
+        <el-form-item label="阅览地址" :label-width="formLabelWidth">
+          <a :href="form.onlineUrl" target="_blank">传送门</a>
+        </el-form-item>
         <el-form-item label="分类" :label-width="formLabelWidth" prop="cid">
           <el-select v-model="form.cid" placeholder="请选择分类" disabled>
             <el-option label="文学" :value="1" />
@@ -38,9 +41,6 @@
             <el-option label="经管" :value="5" />
             <el-option label="科技" :value="6" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="是否过审" :label-width="formLabelWidth" prop="examineState">
-          <el-tag :type="form.examineState|examineFilter">{{ form.examineState|formatExamine }}</el-tag>
         </el-form-item>
         <el-form-item label="上传者" :label-width="formLabelWidth" prop="uploadPerson">
           <el-input v-model="form.uploadPerson" autocomplete="off" :readonly="true" />
@@ -117,7 +117,8 @@ export default {
         examineNote: '',
         updateDate: '',
         favorite: '',
-        availableState: ''
+        availableState: '',
+        onlineUrl: ''
       },
       formLabelWidth: '120px'
     }
@@ -172,5 +173,8 @@ export default {
     width: 230px;
     height: 344px;
     /*margin: 0 auto;*/
+  }
+  a:link, a:visited, a:focus {
+    color: #3377aa;
   }
 </style>

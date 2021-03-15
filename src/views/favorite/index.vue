@@ -211,7 +211,8 @@ export default {
           favorite: book.favorite,
           availableState: book.availableState,
           ifReturn: book.isInHand,
-          borrowPerson: book.borrowPerson
+          borrowPerson: book.borrowPerson,
+          onlineUrl: book.onlineUrl
         }
       }).catch(fail => {
         console.log(fail)

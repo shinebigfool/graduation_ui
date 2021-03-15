@@ -174,7 +174,9 @@ export default {
       currentPage: 1,
       title: '',
       name: '',
-      cid: ''
+      cid: '',
+      examineState: '',
+      availableState: ''
     }
   },
   computed: {
@@ -189,7 +191,8 @@ export default {
     fetchData() {
       this.listLoading = true
       getList({ 'current': this.currentPage, 'size': this.size,
-        'title': this.title, 'author': this.name, 'uploadPerson': this.name, 'cid': this.cid
+        'title': this.title, 'author': this.name, 'uploadPerson': this.name, 'cid': this.cid,
+        'examineState': this.examineState, 'availableState': this.availableState
       }).then(response => {
         console.log(response.retList)
         this.list = response.retList
@@ -220,7 +223,8 @@ export default {
         examineState: book.examineState,
         examinePerson: book.examinePerson,
         examineNote: book.examineNote,
-        updateDate: book.updateDate
+        updateDate: book.updateDate,
+        onlineUrl: book.onlineUrl
       }
     },
     examineBook(book) {
@@ -264,6 +268,8 @@ export default {
       this.cid = this.$refs.searchBar.cid
       this.name = this.$refs.searchBar.name
       this.title = this.$refs.searchBar.title
+      this.examineState = this.$refs.searchBar.examineState
+      this.availableState = this.$refs.searchBar.availableState
       this.fetchData()
     },
     filterBorrow(value, row) {

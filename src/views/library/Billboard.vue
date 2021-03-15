@@ -82,7 +82,8 @@ export default {
           examineNote: book.examineNote,
           updateDate: book.updateDate,
           favorite: book.favorite,
-          availableState: book.availableState
+          availableState: book.availableState,
+          onlineUrl: book.onlineUrl
         }
       }).catch(() => {
         this.dialogFormVisible = false

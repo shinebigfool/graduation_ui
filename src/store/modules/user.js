@@ -7,7 +7,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    mainRole: ''
   }
 }
 
@@ -28,6 +29,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_MAINROLE: (state, mainRole) => {
+    state.mainRole = mainRole
   }
 }
 
@@ -57,7 +61,7 @@ const actions = {
           reject('系统异常，请重新登录')
         }
 
-        const { roles, name, avatar } = response
+        const { roles, name, avatar, mainRole } = response
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('您当前无权限，请联系管理员注册权限')
@@ -65,6 +69,15 @@ const actions = {
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
+        const roleMap = {
+          1: '学生',
+          2: '老师',
+          3: '家长',
+          4: '访客'
+        }
+        console.log('mainRole', mainRole)
+        console.log('mainRoleMap', roleMap[mainRole])
+        commit('SET_MAINROLE', roleMap[mainRole])
         resolve(response)
       }).catch(error => {
         reject(error)

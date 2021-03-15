@@ -18,6 +18,10 @@ npm install
 # develop
 npm run dev
 
+# build
+npm build:prod
+
+
 application will start on http://localhost:9529/
 ```
 

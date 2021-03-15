@@ -3,7 +3,8 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <!-- <breadcrumb class="breadcrumb-container" /> -->
-    <div class="middle" style="text-align:center">当前用户： {{ name }}</div>
+    <div class="middle" style="text-align:center;margin-left:5px;">当前用户： {{ name }}</div>
+    <div class="middle" style="text-align:center;margin-left:50px;">您的角色： {{ mainRole }}</div>
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -16,16 +17,16 @@
               主页
             </el-dropdown-item>
           </router-link>
-          <router-link to="/example/table">
-            <el-dropdown-item>
-              图书页
-            </el-dropdown-item>
-          </router-link>
           <router-link to="/user/personalInfo">
             <el-dropdown-item>个人信息</el-dropdown-item>
           </router-link>
+          <router-link to="/index">
+            <el-dropdown-item>
+              开发日志
+            </el-dropdown-item>
+          </router-link>
           <a target="_blank" href="https://github.com/shinebigfool/graduation">
-            <el-dropdown-item>Github</el-dropdown-item>
+            <el-dropdown-item>本项目地址</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">注销</span>
@@ -49,7 +50,8 @@ export default {
       'name',
       'roles',
       'sidebar',
-      'avatar'
+      'avatar',
+      'mainRole'
     ])
   },
   methods: {

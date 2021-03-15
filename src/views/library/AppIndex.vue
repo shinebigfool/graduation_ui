@@ -1,6 +1,24 @@
 <template>
   <div class="card">
     <el-timeline>
+      <el-timeline-item timestamp="Mar 15, 2021" placement="top">
+        <el-card>
+          <h4>角色信息接口新增主角色信息，图书新增线上阅读地址</h4>
+          <p>倪鑫彦 committed on 15 Mar 2021</p>
+        </el-card>
+      </el-timeline-item>
+      <el-timeline-item timestamp="Mar 12, 2021" placement="top">
+        <el-card>
+          <h4>修复了一个脑溢血的bug</h4>
+          <p>倪鑫彦 committed on 12 Mar 2021</p>
+        </el-card>
+      </el-timeline-item>
+      <el-timeline-item timestamp="Mar 10, 2021" placement="top">
+        <el-card>
+          <h4>针对Linux服务器部署代码调整，本地：dev，打包部署：prod</h4>
+          <p>倪鑫彦 committed on 10 Mar 2021</p>
+        </el-card>
+      </el-timeline-item>
       <el-timeline-item timestamp="Jan 14, 2021" placement="top">
         <el-card>
           <h4>新增榜单接口，修正部分接口功能逻辑</h4>
