@@ -26,8 +26,7 @@ export default {
       navList: [
         { name: '/page', navItem: '首页' },
         { name: '/library', navItem: '图书馆' },
-        { name: '/admin', navItem: '个人中心' },
-        { name: '/index', navItem: '开发日志' }
+        { name: '/admin', navItem: '个人中心' }
       ]
     }
   },

@@ -3,8 +3,8 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <!-- <breadcrumb class="breadcrumb-container" /> -->
-    <div class="middle" style="text-align:center;margin-left:5px;">当前用户： {{ name }}</div>
-    <div class="middle" style="text-align:center;margin-left:50px;">您的角色： {{ mainRole }}</div>
+    <div class="middle" style="text-align:center;margin-left:5px;">欢迎您 {{ name }}</div>
+    <div class="middle" style="text-align:center;margin-left:50px;">您的身份是 {{ mainRole }}</div>
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">

@@ -4,14 +4,16 @@
       新增图书
     </p>
     <el-card
+      v-loading="listLoading"
       style="width:800px;position:relative;left:15%;"
     >
       <el-form
         ref="form"
         :model="form"
         label-width="100px"
+        :rules="rules"
       >
-        <el-form-item label="书名" prop="name" :label-width="formLabelWidth">
+        <el-form-item label="书名" prop="title" :label-width="formLabelWidth">
           <el-input v-model="form.title" type="text" placeholder="书名，不加《》" />
         </el-form-item>
         <el-form-item label="作者" :label-width="formLabelWidth" prop="author">
@@ -37,12 +39,12 @@
         </el-form-item>
         <el-form-item label="分类" :label-width="formLabelWidth" prop="cid">
           <el-select v-model="form.cid" placeholder="请选择分类">
-            <el-option label="文学" :value="1" />
-            <el-option label="流行" :value="2" />
-            <el-option label="文化" :value="3" />
-            <el-option label="生活" :value="4" />
-            <el-option label="经管" :value="5" />
-            <el-option label="科技" :value="6" />
+            <el-option label="人格" :value="1" />
+            <el-option label="情绪" :value="2" />
+            <el-option label="生活习惯" :value="3" />
+            <el-option label="社会行为" :value="4" />
+            <el-option label="认知" :value="5" />
+            <el-option label="创造" :value="6" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -61,6 +63,7 @@ export default {
   components: { ImgUpload },
   data() {
     return {
+      listLoading: false,
       form: {
         id: '',
         title: '',
@@ -78,18 +81,30 @@ export default {
         updateDate: '',
         onlineUrl: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      rules: {
+        title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
+        cid: [{ required: true, message: '种类不能为空', trigger: 'blur' }]
+      }
     }
   },
   methods: {
     onSubmit() {
       console.log(this.form)
-      addBook(this.form).then(response => {
-        this.$message.success(response.retMsg)
-        this.onClear()
-      }).catch(fail => {
-        this.$message.error(fail.retMsg)
-        this.onClear()
+      this.$refs.form.validate(validate => {
+        if (validate) {
+          this.listLoading = true
+          addBook(this.form).then(response => {
+            this.$message.success(response.retMsg)
+            this.onClear()
+          }).catch(fail => {
+            this.$message.error(fail.retMsg)
+            this.onClear()
+          })
+          this.listLoading = false
+        } else {
+          this.$message.error('带\' * \'的字段为空')
+        }
       })
     },
     uploadImg() {

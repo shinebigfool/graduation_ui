@@ -54,7 +54,7 @@
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button v-if="form.favorite==1" type="danger" icon="el-icon-star-on" @click="removeFavorite">取消收藏</el-button>
         <el-button v-else-if="form.favorite==0" icon="el-icon-star-off" @click="addFavorite">收 藏</el-button>
-        <el-button type="primary" @click="borrowBook">借 阅</el-button>
+        <el-button type="primary" :disabled="form.availableState==0" @click="borrowBook">借 阅</el-button>
       </div>
     </el-dialog>
   </div>

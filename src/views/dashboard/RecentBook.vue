@@ -5,7 +5,7 @@
       推荐阅读
 
     </p>
-    <el-button round @click="getSuggestBook">换一批</el-button>
+    <el-button round style="margin: 0px auto 10px auto;" @click="getSuggestBook">换一批</el-button>
     <log-detail ref="logDetail" @onSubmit="getSuggestBook" />
     <el-table
       v-loading="listLoading"

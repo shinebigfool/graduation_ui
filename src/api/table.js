@@ -105,3 +105,35 @@ export function lendCount(params) {
     params: params
   })
 }
+// 我的图书
+export function myBook(params) {
+  return request({
+    url: '/book/myBook',
+    method: 'get',
+    params: params
+  })
+}
+// 赠送
+export function gift(params) {
+  return request({
+    url: '/book/gift',
+    method: 'put',
+    data: params
+  })
+}
+// 遗失
+export function loss(params) {
+  return request({
+    url: '/book/loss',
+    method: 'post',
+    data: params
+  })
+}
+// 损坏
+export function broken(params) {
+  return request({
+    url: '/book/broken',
+    method: 'post',
+    data: params
+  })
+}

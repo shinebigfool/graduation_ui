@@ -40,7 +40,7 @@
         label="主角色"
         min-width="50"
         align="center"
-        :filters="[{text:'学生',value:1},{text:'老师',value:2},{text:'家长',value:3},{text:'访客',value:4}]"
+        :filters="[{text:'学生',value:1},{text:'老师',value:2},{text:'家长',value:3},{text:'访客',value:4},{text:'管理员',value:5}]"
         :filter-method="filterRole"
       >
         <template slot-scope="scope">
@@ -105,7 +105,8 @@ export default {
         1: '学生',
         2: '老师',
         3: '家长',
-        4: '访客'
+        4: '访客',
+        5: '管理员'
       }
       return roleMap[role]
     }

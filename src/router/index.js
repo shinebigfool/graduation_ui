@@ -125,16 +125,23 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/example',
+    path: '/bookManage',
     component: Layout,
-    redirect: '/example/table',
+    redirect: '/bookManage/book',
     name: '图书管理',
+    meta: { title: '图书管理', icon: 'library' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
+        path: 'book',
+        name: 'book',
         component: () => import('@/views/table/index'),
         meta: { title: '图书详情', icon: 'library ', roles: ['admin', 'contentManager', 'parent', 'teacher'] }
+      },
+      {
+        path: 'myBook',
+        name: 'myBook',
+        component: () => import('@/views/myBook/index'),
+        meta: { title: '我的图书', icon: 'library ' }
       }
     ]
   },
@@ -187,7 +194,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/regist/user',
     name: '注册中心',
-    meta: { title: '注册中心', icon: 'insertCenter', roles: ['admin', 'teacher', 'parent', 'contentManager'] },
+    meta: { title: '注册中心', icon: 'insertCenter' },
     children: [
       {
         path: 'user',
@@ -199,7 +206,7 @@ export const asyncRoutes = [
         path: 'book',
         name: '图书上传',
         component: () => import('@/views/registCenter/bookUpload'),
-        meta: { title: '图书上传', icon: 'bookRegist', roles: ['admin', 'teacher', 'parent', 'contentManager'] }
+        meta: { title: '图书上传', icon: 'bookRegist' }
       },
       {
         path: 'class',
@@ -251,6 +258,11 @@ export const asyncRoutes = [
         path: 'personalInfo',
         meta: { title: '个人信息管理', icon: 'personal' },
         component: () => import('@/views/user/personalInfo')
+      },
+      {
+        path: 'personalPoint',
+        meta: { title: '积分明细', icon: 'loss' },
+        component: () => import('@/views/user/point')
       }
     ]
   },
@@ -274,22 +286,21 @@ export const asyncRoutes = [
 
           },
           {
-            path: 'lossBook',
-            meta: { title: '遗失图书', icon: 'loss' }
+            path: 'broken',
+            meta: { title: '损坏图书', icon: 'loss' },
+            component: () => import('@/views/affair/brokenBook')
           },
           {
             path: 'applyBook',
-            meta: { title: '申请购书', icon: 'loss' }
+            meta: { title: '申请购书', icon: 'loss' },
+            component: () => import('@/views/affair/applyBook')
           }
         ]
       },
       {
-        path: 'myAffair',
-        meta: { title: '我的申请', icon: 'loss' }
-      },
-      {
         path: 'affairQueue',
-        meta: { title: '待办流程', icon: 'loss' }
+        meta: { title: '流程审批', icon: 'loss' },
+        component: () => import('@/views/affair/affairQueue')
       }
     ]
   },

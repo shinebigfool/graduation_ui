@@ -73,7 +73,8 @@ const actions = {
           1: '学生',
           2: '老师',
           3: '家长',
-          4: '访客'
+          4: '访客',
+          5: '管理员'
         }
         console.log('mainRole', mainRole)
         console.log('mainRoleMap', roleMap[mainRole])

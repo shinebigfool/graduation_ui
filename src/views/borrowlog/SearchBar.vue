@@ -25,12 +25,12 @@
       @keyup.enter.native="searchClick"
     />
     <el-select v-model="cid" placeholder="按种类搜索..." size="small" style="width: 200px;margin-right: 15px">
-      <el-option label="文学" :value="1" />
-      <el-option label="流行" :value="2" />
-      <el-option label="文化" :value="3" />
-      <el-option label="生活" :value="4" />
-      <el-option label="经管" :value="5" />
-      <el-option label="科技" :value="6" />
+      <el-option label="人格" :value="1" />
+      <el-option label="情绪" :value="2" />
+      <el-option label="生活习惯" :value="3" />
+      <el-option label="社会行为" :value="4" />
+      <el-option label="认知" :value="5" />
+      <el-option label="创造" :value="6" />
     </el-select>
     <el-select v-model="borrowState" placeholder="按借阅状态搜索..." size="small" style="width: 200px;margin-right: 15px">
       <el-option label="已还" :value="1" />

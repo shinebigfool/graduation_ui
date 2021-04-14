@@ -37,9 +37,9 @@
         label="图书类型"
         min-width="80"
         align="center"
-        :filters="[{text:'文学',value:1},{text: '流行',value: 2},
-                   {text: '文化',value: 3},{text: '生活',value: 4},
-                   {text: '经营',value: 5},{text: '科技',value: 6}]"
+        :filters="[{text:'人格',value:1},{text:'情绪',value:2},
+                   {text:'生活习惯',value:3},{text:'社会行为',value:4},
+                   {text:'认知',value:5},{text:'创造',value:6},]"
         :filter-method="filterCid"
         filter-placement="bottom-end"
       >
@@ -118,12 +118,12 @@ export default {
     },
     formatCid(cid) {
       const categoryMap = {
-        1: '文学',
-        2: '流行',
-        3: '文化',
-        4: '生活',
-        5: '经营',
-        6: '科技'
+        1: '人格',
+        2: '情绪',
+        3: '生活习惯',
+        4: '社会行为',
+        5: '认知',
+        6: '创造'
       }
       return categoryMap[cid]
     }

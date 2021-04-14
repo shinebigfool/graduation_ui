@@ -37,9 +37,9 @@
         label="种类"
         min-width="50"
         align="center"
-        :filters="[{text:'文学',value:1},{text:'流行',value:2},
-                   {text:'文化',value:3},{text:'生活',value:4},
-                   {text:'经营',value:5},{text:'科技',value:6},]"
+        :filters="[{text:'人格',value:1},{text:'情绪',value:2},
+                   {text:'生活习惯',value:3},{text:'社会行为',value:4},
+                   {text:'认知',value:5},{text:'创造',value:6},]"
         :filter-method="filterCata"
         filter-placement="bottom-end"
       >
@@ -85,9 +85,9 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click.native.stop="checkDetail(scope.row)">详情</el-button>
+          <el-button v-if="roles.includes('admin')||roles.includes('contentManager')" type="text" @click.native.stop="checkDetail(scope.row)">修改</el-button>
           <el-button v-if="roles.includes('admin')||roles.includes('contentManager')" type="text" @click.native.stop="examineBook(scope.row)">审批</el-button>
-          <el-button v-if="roles.includes('admin')||roles.includes('contentManager')" type="text" @click.native.stop="deleteBook(scope.row)">下架</el-button>
+          <el-button v-if="scope.row.availableState!=3&&(roles.includes('admin')||roles.includes('contentManager'))" type="text" @click.native.stop="deleteBook(scope.row)">下架</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -138,12 +138,12 @@ export default {
     },
     formatCata(cid) {
       const cataMap = {
-        1: '文学',
-        2: '流行',
-        3: '文化',
-        4: '生活',
-        5: '经营',
-        6: '科技'
+        1: '人格',
+        2: '情绪',
+        3: '生活习惯',
+        4: '社会行为',
+        5: '认知',
+        6: '创造'
       }
       return cataMap[cid]
     },

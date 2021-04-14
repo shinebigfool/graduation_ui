@@ -143,8 +143,9 @@ export default {
           }).then(response => {
             console.log(response)
             _this.$message.success('操作成功')
+            this.onClear()
           })
-          this.onClear()
+
           this.listLoading = false
         } else {
           this.$message.error('带\' * \'的字段为空或者两次密码不一致')

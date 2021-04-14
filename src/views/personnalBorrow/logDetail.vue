@@ -51,14 +51,16 @@
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button v-if="form.favorite==1" type="danger" icon="el-icon-star-on" @click="removeFavorite">取消收藏</el-button>
         <el-button v-else-if="form.favorite==0" icon="el-icon-star-off" @click="addFavorite">收 藏</el-button>
-        <el-button v-if="form.ifReturn==1" type="primary" @click="borrowBook">借 阅</el-button>
+        <el-button v-if="form.ifReturn==2" @click="loss">遗 失</el-button>
+        <el-button v-if="form.ifReturn==2" @click="broken">损 坏</el-button>
+        <el-button v-if="form.ifReturn==1" type="primary" :disabled="form.availableState==0" @click="borrowBook">借 阅</el-button>
         <el-button v-if="form.ifReturn==2" type="primary" @click="returnBook">归 还</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
-import { addFavoriteBook, lendBook, removeFavoriteBook } from '@/api/table'
+import { addFavoriteBook, lendBook, removeFavoriteBook, loss } from '@/api/table'
 import { returnBook } from '@/api/borrowLog'
 export default {
   name: 'LogDetail',
@@ -178,6 +180,28 @@ export default {
         this.$emit('onSubmit')
       }).catch(fail => {
         console.log(fail)
+      })
+    },
+    loss() {
+      console.log(this.form)
+      loss(this.form).then(response => {
+        console.log(response)
+        this.$message.info('新建遗失事务成功，请等待审批')
+        this.dialogFormVisible = false
+        this.$router.push({
+          path: '/affair/affairQueue'
+        })
+      }).catch(error => {
+        this.$message.error(error.retMsg)
+      })
+    },
+    broken() {
+      this.$router.push({
+        path: '/affair/addAffair/broken',
+        query: {
+          form: this.form,
+          listLoading: true
+        }
       })
     }
   }
